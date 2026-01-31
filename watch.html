@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Video</title>
+    <style>
+        body {
+            background-color: #141414;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Sederhana */
+        header {
+            background-color: #000;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        /* Layout Grid untuk Player dan Sidebar */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px; /* Kiri konten, Kanan sidebar iklan */
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Responsif untuk Mobile */
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Video Player Styles */
+        .video-container {
+            width: 100%;
+            background: #000;
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info h1 {
+            font-size: 22px;
+            margin-top: 0;
+        }
+
+        .tags {
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: #333;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        /* AD SPACE STYLING */
+        .ad-banner-top {
+            width: 100%;
+            height: 90px;
+            background-color: #222;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 1px dashed #444;
+        }
+
+        .ad-sidebar {
+            width: 100%;
+            height: 600px; /* Tinggi Banner Sidebar */
+            background-color: #222;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #444;
+            position: sticky;
+            top: 20px;
+        }
+
+        .ad-footer {
+            width: 100%;
+            height: 250px;
+            background-color: #222;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">&larr; Kembali</a>
+        <h3 style="margin:0; color:#e50914;">NETFLIXKW</h3>
+    </header>
+
+    <div style="max-width: 1400px; margin: 10px auto; padding: 0 20px;">
+        <div class="ad-banner-top">
+            ADVERTISEMENT BANNER (728x90)
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <div class="content-col">
+            <div class="video-container">
+                <iframe id="player" src="" allowfullscreen></iframe>
+            </div>
+
+            <div class="video-info">
+                <h1 id="video-title">Loading...</h1>
+                <div class="tags">
+                    <span id="video-cat" class="tag">Category</span>
+                    <span id="video-label" class="tag">Label</span>
+                </div>
+                <p style="color:#aaa; margin-top:20px;">
+                    Server source: Vinovo.to
+                </p>
+            </div>
+        </div>
+
+        <div class="sidebar-col">
+            <div class="ad-sidebar">
+                SIDEBAR AD (300x600)
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-footer">
+         FOOTER ADVERTISEMENT AREA
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Ambil ID dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = parseInt(urlParams.get('id'));
+
+        // Cari video di data.js
+        const video = videos.find(v => v.id === videoId);
+
+        if (video) {
+            document.getElementById('player').src = video.embed;
+            document.getElementById('video-title').textContent = video.title;
+            document.getElementById('video-cat').textContent = video.category;
+            document.getElementById('video-label').textContent = video.label;
+            document.title = "Watch: " + video.title;
+        } else {
+            document.querySelector('.content-col').innerHTML = "<h2>Video tidak ditemukan.</h2>";
+        }
+    </script>
+</body>
+</html>

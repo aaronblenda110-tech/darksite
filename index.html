@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamFlix - Home</title>
+    <style>
+        :root {
+            --bg-color: #141414;
+            --text-color: #e5e5e5;
+            --primary-red: #e50914;
+            --card-hover: #1f1f1f;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 20px 4%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0));
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            color: var(--primary-red);
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 40px;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: #e5e5e5;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #b3b3b3;
+        }
+
+        /* Hero / Container */
+        .container {
+            padding: 80px 4% 40px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 30px;
+            color: #fff;
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .video-card {
+            background-color: var(--bg-color);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.3s, z-index 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .info {
+            padding: 10px 0;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .meta {
+            font-size: 11px;
+            color: #a3a3a3;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge {
+            border: 1px solid #a3a3a3;
+            padding: 0 4px;
+            border-radius: 2px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">NETFLIXKW</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#">Kategori</a>
+            <a href="#">Terbaru</a>
+            <a href="#">My List</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Baru Ditambahkan</h2>
+        <div class="video-grid" id="video-grid">
+            </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        const grid = document.getElementById('video-grid');
+
+        // Render video cards
+        videos.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.onclick = () => window.location.href = `watch.html?id=${video.id}`;
+
+            card.innerHTML = `
+                <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail" loading="lazy">
+                <div class="info">
+                    <div class="title">${video.title}</div>
+                    <div class="meta">
+                        <span class="category">${video.category}</span>
+                        <span class="badge">HD</span>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
