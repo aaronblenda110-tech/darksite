@@ -1,0 +1,17 @@
+
+body{margin:0;background:#0b0b0b;color:#eee;font-family:Arial}
+header{background:#111;padding:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+h1{margin:0;font-size:20px}
+nav a{color:#aaa;margin-right:10px;text-decoration:none}
+nav a:hover{color:#fff}
+#search{background:#1a1a1a;border:0;color:#fff;padding:6px;border-radius:4px}
+#video-list{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{background:#1a1a1a;border-radius:8px;overflow:hidden}
+.card img{width:100%}
+.card h3{font-size:14px;padding:10px;margin:0}
+.card a{color:#fff;text-decoration:none}
+#pagination{text-align:center;padding:20px}
+#pagination button{margin:3px;background:#222;color:#fff;border:0;padding:6px 10px;border-radius:4px}
+.player{padding:20px}
+.player iframe{width:100%;height:60vh;border:0}
+footer{text-align:center;color:#666;padding:15px}
