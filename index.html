@@ -4,162 +4,384 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StreamFlix - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <style>
         :root {
             --bg-color: #141414;
-            --text-color: #e5e5e5;
+            --text-color: #fff;
             --primary-red: #e50914;
-            --card-hover: #1f1f1f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
 
         /* Navbar */
         .navbar {
             display: flex;
             align-items: center;
-            padding: 20px 4%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0));
+            padding: 15px 4%;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-sizing: border-box;
+            transition: background-color 0.4s ease;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        .navbar.scrolled {
+            background-color: var(--bg-color);
         }
 
         .logo {
             color: var(--primary-red);
-            font-size: 24px;
-            font-weight: bold;
-            margin-right: 40px;
+            font-size: 32px;
+            font-weight: 800;
             text-decoration: none;
+            letter-spacing: 1px;
+            margin-right: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
         }
 
         .nav-links a {
             color: #e5e5e5;
             text-decoration: none;
-            margin-right: 20px;
             font-size: 14px;
+            font-weight: 400;
             transition: color 0.3s;
         }
 
         .nav-links a:hover {
             color: #b3b3b3;
         }
-
-        /* Hero / Container */
-        .container {
-            padding: 80px 4% 40px;
+        
+        .nav-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
         }
 
-        h2 {
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            padding: 0 4%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, var(--bg-color) 0%, rgba(20,20,20,0) 50%, rgba(0,0,0,0.5) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            margin-top: 50px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.45);
+        }
+
+        .hero-desc {
             font-size: 1.2rem;
-            margin-bottom: 10px;
-            margin-top: 30px;
-            color: #fff;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            font-weight: 300;
         }
 
-        /* Video Grid */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        .hero-buttons {
+            display: flex;
             gap: 15px;
         }
 
-        .video-card {
-            background-color: var(--bg-color);
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
             border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-play {
+            background-color: white;
+            color: black;
+        }
+
+        .btn-play:hover {
+            background-color: rgba(255, 255, 255, 0.75);
+        }
+
+        .btn-info {
+            background-color: rgba(109, 109, 110, 0.7);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: rgba(109, 109, 110, 0.4);
+        }
+
+        /* Container & Grids */
+        .container {
+            padding: 40px 4% 60px;
+            position: relative;
+            z-index: 5;
+            margin-top: -100px;
+        }
+
+        .section-title {
+            font-size: 1.4vw;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #e5e5e5;
+        }
+        
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.2rem; }
+            .hero-title { font-size: 2.5rem; }
+            .hero { height: 65vh; }
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background-color: #1f1f1f;
+            border-radius: 6px;
             overflow: hidden;
-            transition: transform 0.3s, z-index 0.3s;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
             position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .video-card:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
             z-index: 10;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
         }
 
         .thumbnail {
             width: 100%;
             aspect-ratio: 16/9;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 6px 6px 0 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-card:hover .thumbnail {
+            border-radius: 6px 6px 0 0;
+            opacity: 0.9;
+        }
+        
+        .play-icon-overlay {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: rgba(255,255,255,0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .video-card:hover .play-icon-overlay {
+            opacity: 1;
+            transform: translate(-50%, -40%);
         }
 
         .info {
-            padding: 10px 0;
+            padding: 15px;
+            background: linear-gradient(180deg, #1f1f1f 0%, #141414 100%);
         }
 
         .title {
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 600;
             color: #fff;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .meta {
-            font-size: 11px;
+            font-size: 13px;
             color: #a3a3a3;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .match-rating {
+            color: #46d369;
+            font-weight: 600;
         }
 
         .badge {
-            border: 1px solid #a3a3a3;
-            padding: 0 4px;
-            border-radius: 2px;
-            font-size: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tags-row {
+            font-size: 12px;
+            color: #a3a3a3;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .tags-row span {
+            display: inline-block;
+        }
+        .tags-row span:not(:last-child)::after {
+            content: " \2022 ";
+            color: #555;
+            margin-left: 8px;
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <a href="index.html" class="logo">NETFLIXKW</a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="#">Kategori</a>
-            <a href="#">Terbaru</a>
+            <a href="index.html" style="font-weight: 600;">Home</a>
+            <a href="#">TV Shows</a>
+            <a href="#">Movies</a>
+            <a href="#">New & Popular</a>
             <a href="#">My List</a>
+        </div>
+        <div class="nav-right">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-bell"></i>
+            <div style="width: 32px; height: 32px; background: #e50914; border-radius: 4px; overflow: hidden;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" style="width:100%; height:100%; object-fit: cover;">
+            </div>
         </div>
     </nav>
 
-    <div class="container">
-        <h2>Baru Ditambahkan</h2>
-        <div class="video-grid" id="video-grid">
+    <!-- Hero Section -->
+    <div class="hero" id="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title" id="hero-title">Loading...</h1>
+            <p class="hero-desc" id="hero-desc">Binge-worthy entertainment awaits. Explore the massive catalog tailored just for you.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-play" id="hero-play-btn">
+                    <i class="fas fa-play"></i> Play
+                </button>
+                <button class="btn btn-info">
+                    <i class="fas fa-info-circle"></i> More Info
+                </button>
             </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Baru Ditambahkan</h2>
+        <div class="video-grid" id="video-grid">
+            <!-- Videos injected here -->
+        </div>
     </div>
 
     <script src="data.js"></script>
     <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize Data
         const grid = document.getElementById('video-grid');
+        
+        // Randomly Select a Featured Video for Hero
+        if (videos && videos.length > 0) {
+            const featured = videos[0]; // You can randomize it via Math.floor(Math.random() * videos.length)
+            
+            document.getElementById('hero-section').style.backgroundImage = `url('${featured.thumbnail}')`;
+            document.getElementById('hero-title').textContent = featured.title;
+            // Provide some fake description since none exists in data.js
+            document.getElementById('hero-desc').textContent = \`\${featured.title}. Watch it now in HD. Dive into the world of \${featured.category} like never before with crystal clear streaming.\`;
+            
+            document.getElementById('hero-play-btn').onclick = () => {
+                window.location.href = \`watch.html?id=\${featured.id}\`;
+            };
+        }
 
         // Render video cards
         videos.forEach(video => {
+            const matchPercent = Math.floor(Math.random() * (99 - 85 + 1) + 85); // Random 85-99%
+
             const card = document.createElement('div');
             card.className = 'video-card';
-            card.onclick = () => window.location.href = `watch.html?id=${video.id}`;
+            card.onclick = () => window.location.href = \`watch.html?id=\${video.id}\`;
 
-            card.innerHTML = `
-                <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail" loading="lazy">
+            card.innerHTML = \`
+                <div style="position:relative;">
+                    <img src="\${video.thumbnail}" alt="\${video.title}" class="thumbnail" loading="lazy">
+                    <i class="fas fa-play-circle play-icon-overlay"></i>
+                </div>
                 <div class="info">
-                    <div class="title">${video.title}</div>
                     <div class="meta">
-                        <span class="category">${video.category}</span>
+                        <span class="match-rating">\${matchPercent}% Match</span>
                         <span class="badge">HD</span>
+                        <span style="color: #fff; font-size:12px;">2023</span>
+                    </div>
+                    <div class="title">\${video.title}</div>
+                    <div class="tags-row">
+                        <span>\${video.category}</span>
+                        <span>\${video.label}</span>
                     </div>
                 </div>
-            `;
+            \`;
             grid.appendChild(card);
         });
     </script>
