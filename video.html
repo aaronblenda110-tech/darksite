@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="misbarXI - Premium video streaming platform with the best user interface experience. Watch unlimited videos and enjoy stunning visuals.">
-    <meta name="keywords" content="streaming, video, watch, premium, adult, asian">
-    <meta property="og:title" content="misbarXI - Premium Streaming Experience">
-    <meta property="og:description" content="Stream videos with the best design and easy navigation.">
+    <meta name="description" content="Watch premium videos on misbarXI.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <title>misbarXI - Premium Video Streaming</title>
+    <title>Loading Video... - misbarXI</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navbar / Header -->
     <header class="navbar">
         <a href="index.html" class="logo">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary-color)">
@@ -24,13 +20,6 @@
             </svg>
             misbar<span>XI</span>
         </a>
-        <div class="search-bar">
-            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="searchInput" placeholder="Search videos, models, or categories...">
-        </div>
     </header>
 
     <!-- Header Ad -->
@@ -38,7 +27,6 @@
         <div class="ad-placeholder ad-720x90">Ad 720x90</div>
     </div>
 
-    <!-- Main ContentArea -->
     <main class="container">
         <div class="layout-wrapper">
             <!-- Left Sidebar -->
@@ -59,16 +47,38 @@
             </aside>
 
             <!-- Main Video Content -->
-            <section class="main-content">
-                <!-- Video Grid Display -->
-                <div class="video-grid" id="videoGrid">
-                    <!-- Video cards rendered by app.js -->
-                </div>
+            <section class="main-content video-player-container">
+                <a href="index.html" class="back-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Home
+                </a>
                 
-                <!-- Pagination Controls -->
-                <nav aria-label="Page Navigation" class="pagination" id="pagination">
-                    <!-- Pagination buttons appear here -->
-                </nav>
+                <!-- Video Player -->
+                <article class="player-wrapper" id="playerArea">
+                    <!-- Iframe dimuat melalui app.js -->
+                </article>
+
+                <!-- Video Metadata -->
+                <section class="video-details">
+                    <h1 id="videoTitle">Loading video title...</h1>
+                    <div id="videoMeta" class="video-details-meta">
+                        <!-- Meta data seperti tanggal dan kategori -->
+                    </div>
+                    <div id="videoTags" class="tag-list">
+                        <!-- Tags video -->
+                    </div>
+                </section>
+
+                <!-- Related Videos Section -->
+                <section class="related-videos">
+                    <h2 class="section-title">Related Videos</h2>
+                    <div class="video-grid" id="relatedGrid">
+                        <!-- Related video cards loaded by app.js -->
+                    </div>
+                </section>
             </section>
 
             <!-- Right Sidebar for Ads -->
@@ -81,18 +91,16 @@
             </aside>
         </div>
     </main>
-
+    
     <!-- Footer Ad -->
     <div class="ad-container ad-footer">
         <div class="ad-placeholder ad-720x90">Ad 720x90</div>
     </div>
 
-    <!-- Footer SEO text -->
     <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; margin-top: 2rem; border-top: 1px solid var(--glass-border);">
         <p>&copy; 2026 misbarXI Premium Platform. All Rights Reserved.</p>
     </footer>
 
-    <!-- Scripts -->
     <script src="data.js"></script>
     <script src="app.js"></script>
 </body>
