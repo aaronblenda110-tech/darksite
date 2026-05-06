@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Konfigurasi Umum
+    // General Configuration
     const allVideos = typeof videoData !== 'undefined' ? [...videoData].reverse() : [];
     
-    // Identifikasi Elemen per Halaman
+    // Identify page elements
     const isHomePage = document.getElementById("videoGrid") !== null && document.getElementById("categoryFilters") !== null;
     const isVideoPage = document.getElementById("playerArea") !== null && document.getElementById("relatedGrid") !== null;
 
-    // Fungsi Utilitas Slug URL
+    // URL Slug Utility
     function createSlug(title) {
         if (!title) return "video";
         return title.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '-');
     }
 
-    // Fungsi Render Card HTML
+    // Render Video Card HTML
     function createVideoCardHTML(video) {
         const slug = createSlug(video.title);
         const embedSrc = video.embedUrl || "";
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       >>> LOGIKA HALAMAN UTAMA (HOME) <<<
+       >>> HOME PAGE LOGIC <<<
        ========================================= */
     if (isHomePage) {
         const gridEl = document.getElementById("videoGrid");
@@ -51,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const ITEMS_PER_PAGE = 24;
         const homeParams = new URLSearchParams(window.location.search);
         let currentPage = parseInt(homeParams.get('page')) || 1;
-        let activeCategory = homeParams.get('category') || "Semua";
+        let activeCategory = homeParams.get('category') || "All";
         let searchQuery = homeParams.get('q') || "";
 
         function updateHomeURL() {
             const newUrl = new URL(window.location);
-            if (activeCategory !== "Semua") {
+            if (activeCategory !== "All") {
                 newUrl.searchParams.set("category", activeCategory);
             } else {
                 newUrl.searchParams.delete("category");
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let filteredVideos = [...allVideos];
 
-        const uniqueCategories = ["Semua", ...new Set(allVideos.map(v => v.category).filter(c => c))];
+        const uniqueCategories = ["All", ...new Set(allVideos.map(v => v.category).filter(c => c))];
 
         function renderCategories() {
             categoryFiltersEl.innerHTML = "";
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function applyFilters() {
             filteredVideos = allVideos.filter(v => {
-                const matchCategory = activeCategory === "Semua" ? true : v.category === activeCategory;
+                const matchCategory = activeCategory === "All" ? true : v.category === activeCategory;
                 const matchSearch = v.title.toLowerCase().includes(searchQuery) || 
                                     (v.category && v.category.toLowerCase().includes(searchQuery));
                 return matchCategory && matchSearch;
@@ -117,8 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <h2>Video tidak ditemukan</h2>
-                        <p>Cobalah kata kunci lain atau ubah filter kategori.</p>
+                        <h2>No videos found</h2>
+                        <p>Try different keywords or change the category filter.</p>
                     </div>`;
                 paginationEl.innerHTML = "";
                 return;
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       >>> LOGIKA HALAMAN VIDEO (DISPLAY) <<<
+       >>> VIDEO PAGE LOGIC <<<
        ========================================= */
     if (isVideoPage) {
         const params = new URLSearchParams(window.location.search);
@@ -180,8 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
             
             document.getElementById("videoTitle").textContent = video.title;
             const metaHtml = `
-                <span class="tag-badge" style="background:var(--primary-color);color:#000;">${video.category || 'Umum'}</span>
-                <span>📅 Diupload pada: ${video.uploadDate || 'Tidak ada info'}</span>
+                <span class="tag-badge" style="background:var(--primary-color);color:#000;">${video.category || 'General'}</span>
+                <span>📅 Uploaded: ${video.uploadDate || 'No info'}</span>
             `;
             document.getElementById("videoMeta").innerHTML = metaHtml;
             
@@ -221,14 +221,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if(relatedVideos.length > 0) {
                 relatedGrid.innerHTML = relatedVideos.map(v => createVideoCardHTML(v)).join("");
             } else {
-                relatedGrid.innerHTML = `<p style="color:var(--text-muted);">Tidak ada video terkait.</p>`;
+                relatedGrid.innerHTML = `<p style="color:var(--text-muted);">No related videos found.</p>`;
             }
 
         } else {
-            document.getElementById("videoTitle").textContent = "Video tidak ditemukan.";
+            document.getElementById("videoTitle").textContent = "Video not found.";
             document.getElementById("playerArea").innerHTML = `
                 <div style="display:flex; height:100%; align-items:center; justify-content:center; color:white;">
-                    <h2>Media telah dihapus atau ID tidak valid.</h2>
+                    <h2>This video has been removed or the ID is invalid.</h2>
                 </div>`;
             document.getElementById("relatedGrid").innerHTML = "";
             document.querySelector(".section-title").style.display = "none";
